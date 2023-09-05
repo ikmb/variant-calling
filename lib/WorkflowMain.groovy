@@ -24,7 +24,7 @@ class WorkflowMain {
         // Help message
         help_string = """
            ===============================================================================
-           IKMB pipeline | version ${workflow.manifest.version}
+           IKMB variant calling pipeline | version ${workflow.manifest.version}
            ===============================================================================
            Usage: nextflow run ikmb/pipeline -samples Samples.csv
 

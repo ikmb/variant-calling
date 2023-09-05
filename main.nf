@@ -86,7 +86,7 @@ workflow.onComplete {
     def hf = new File("$baseDir/assets/email_template.html")
     def html_template = engine.createTemplate(hf).make(email_fields)
     def email_html = html_template.toString()
-  
+
     def subject = "Pipeline finished ($run_name)."
 
     if (params.email) {
