@@ -1,7 +1,5 @@
 process FASTP {
 
-    publishDir "${params.outdir}/FastP", mode: 'copy'
-    
     label 'short_parallel'
 
     container 'quay.io/biocontainers/fastp:0.23.2--h5f740d0_3'
@@ -25,9 +23,8 @@ process FASTP {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        fastp \$( fastp --version | sed -e "s/fastp //g" )
+        fastp: \$(fastp --version 2>&1 | sed -e "s/fastp //g")
     END_VERSIONS
-
     """	
 
 }

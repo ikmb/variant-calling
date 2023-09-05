@@ -4,9 +4,9 @@ process SAMTOOLS_MARKDUP {
 
     label 'medium_parallel'
 
-    tag "${meta.patient_id}|${meta.sample_id}"
+    tag "${meta.sample_id}"
 
-    //publishDir "${params.outdir}/${meta.patient_id}/${meta.sample_id}/", mode: 'copy'
+    //publishDir "${params.outdir}/${meta.sample_id}/", mode: 'copy'
 
     input:
     tuple val(meta),path(merged_bam),path(merged_bam_index)

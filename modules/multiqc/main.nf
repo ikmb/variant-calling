@@ -12,9 +12,9 @@ process MULTIQC {
     path("versions.yml"), emit: versions
 
     script:
-
+    rname = "multiqc_" + params.run_name + ".html"
     """
-    multiqc . 
+    multiqc -n $rname . 
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

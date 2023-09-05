@@ -2,19 +2,16 @@ process SAMTOOLS_DICT {
 
     container 'quay.io/biocontainers/samtools:1.16.1--h6899075_1'
 
-    publishDir "${params.outdir}/${assembly}", mode: 'copy'
-
     tag "${fasta}"
 
     input:
-    tuple val(meta), path(fasta)
+    path(fasta)
 
     output:
-    tuple val(meta),path(dict), emit: dict
+    path(dict), emit: dict
     path("versions.yml"), emit: versions
 
     script:
-    assembly = meta.assembly
     dict = fasta.getBaseName() + ".dict"
 
     """

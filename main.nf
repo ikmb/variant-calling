@@ -2,16 +2,15 @@
 
 nextflow.enable.dsl=2
 
-// DEV: Update this block with a description and the name of the pipeline
 /**
 ===============================
-Pipeline
+Variant calling Pipeline
 ===============================
 
-This Pipeline performs ....
+This Pipeline performs variant calling on generic genomes
 
 ### Homepage / git
-git@github.com:ikmb/pipeline.git
+git@github.com:ikmb/variant-calling.git
 
 **/
 
@@ -24,20 +23,17 @@ run_name = ( params.run_name == false) ? "${workflow.sessionId}" : "${params.run
 
 WorkflowMain.initialise(workflow, params, log)
 
-// DEV: Rename this and the file under lib/ to something matching this pipeline (e.g. WorkflowExomes)
-WorkflowPipeline.initialise( params, log)
+WorkflowVariantCalling.initialise( params, log)
 
-// DEV: Rename this to something matching this pipeline, e.g. "EXOMES"
-include { MAIN } from './workflows/main'
+include { VARIANT_CALLING } from './workflows/variant_calling'
 
 multiqc_report = Channel.from([])
 
 workflow {
 
-    // DEV: Rename to something matching this pipeline (see above)
-    MAIN()
+    VARIANT_CALLING()
 
-    multiqc_report = multiqc_report.mix(MAIN.out.qc).toList()
+    multiqc_report = multiqc_report.mix(VARIANT_CALLING.out.qc).toList()
 }
 
 workflow.onComplete {

@@ -4,7 +4,7 @@ process SAMTOOLS_MERGE {
 
     container 'quay.io/biocontainers/samtools:1.16.1--h6899075_1'
 
-    tag "${meta.patient_id}|${meta.sample_id}"
+    tag "${meta.sample_id}"
 
     input:
     tuple val(meta), path(aligned_bam_list)
@@ -15,7 +15,7 @@ process SAMTOOLS_MERGE {
     path("versions.yml"), emit: versions
 
     script:
-    merged_bam = meta.patient_id + "_" + meta.sample_id + "-merged.bam"
+    merged_bam = meta.sample_id + "-merged.bam"
     merged_bam_index = merged_bam + ".bai"
     
     """
