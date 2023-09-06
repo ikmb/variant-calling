@@ -22,7 +22,7 @@ sample_id,library_id,readgroup_id,R1,R2
 MySample,I33978-L2,HHNVKDRXX.2.NA24143_I33978-L2,/path/to/R1,/path/to/R2
 ```
 
-For samples with multiple sets of paired-end read files, merging of the BAM files will be performed automatically prior to deduplication and variant calling. 
+For samples with multiple sets of paired-end read files, merging of the BAM files will be performed automatically prior to deduplication and variant calling. Do not concatenate the reads beforehand, or you will destroy potentially important readgroup information!
 
 ### `--fasta`
 

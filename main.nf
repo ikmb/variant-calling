@@ -27,13 +27,14 @@ WorkflowVariantCalling.initialise( params, log)
 
 include { VARIANT_CALLING } from './workflows/variant_calling'
 
-multiqc_report = Channel.from([])
+def multiqc_report = Channel.from([])
 
 workflow {
 
     VARIANT_CALLING()
-
+    
     multiqc_report = multiqc_report.mix(VARIANT_CALLING.out.qc).toList()
+    
 }
 
 workflow.onComplete {
@@ -96,12 +97,12 @@ workflow.onComplete {
             if (workflow.success && !params.skip_multiqc) {
                 mqc_report = multiqc_report.getVal()
                 if (mqc_report.getClass() == ArrayList){
-                    log.warn "[PIpeline] Found multiple reports from process 'multiqc', will use only one"
+                    log.warn "[Pipeline] Found multiple reports from process 'multiqc', will use only one"
                     mqc_report = mqc_report[0]
                 }
             }
         } catch (all) {
-            log.warn "[IKMB ExoSeq] Could not attach MultiQC report to summary email"
+            log.warn "[IKMB Variant Calling] Could not attach MultiQC report to summary email"
         }
 
         def smail_fields = [ email: params.email, subject: subject, email_txt: email_txt, email_html: email_html, baseDir: "$baseDir", mqcFile: mqc_report, mqcMaxSize: params.maxMultiqcEmailFileSize.toBytes() ]
@@ -115,7 +116,7 @@ workflow.onComplete {
             [ 'sendmail', '-t' ].execute() << sendmail_html
         } catch (all) {
           // Catch failures and try with plaintext
-          [ 'mail', '-s', subject, params.email ].execute() << email_txt
+            [ 'mail', '-s', subject, params.email ].execute() << email_txt
         }
     }
 

@@ -1,6 +1,6 @@
 process FASTP {
 
-    label 'short_parallel'
+    label 'medium_parallel'
 
     tag "${meta.sample_id}|${meta.readgroup_id}"
 

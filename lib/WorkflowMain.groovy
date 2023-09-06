@@ -11,11 +11,25 @@ class WorkflowMain {
     // Validate parameters and print summary to screen
     //
     public static void initialise(workflow, params, log) {
+
+        log.info header(workflow)
+
         // Print help to screen if required
         if (params.help) {
             log.info help(workflow, params, log)
             System.exit(0)
         }
+    }
+
+    public static String header(workflow) {
+        def headr = ''
+        def info_line = "IKMB Variant Calling pipeline | version ${workflow.manifest.version}"
+        headr = """
+    ===============================================================================
+    ${info_line}
+    ===============================================================================
+    """
+        return headr
     }
 
     public static String help(workflow, params, log) {

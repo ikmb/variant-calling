@@ -151,8 +151,8 @@ workflow VARIANT_CALLING {
     MULTIQC(
         multiqc_files.collect()
     )
-
+    
     emit:
-    qc = MULTIQC.out.html
+    qc = MULTIQC.out.report
 	
 }

@@ -4,7 +4,7 @@ process BWA2_MEM {
 
     container 'quay.io/biocontainers/mulled-v2-e5d375990341c5aef3c9aff74f96f66f65375ef6:2cdf6bf1e92acbeb9b2834b1c58754167173a410-0'
 
-    label 'medium_parallel'
+    label 'long_parallel'
 
     input:
     tuple val(meta), path(left),path(right)
@@ -22,7 +22,7 @@ process BWA2_MEM {
     bwa-mem2 mem -K 1000000 -H ${dict} -M -R "@RG\\tID:${meta.readgroup_id}\\tPL:ILLUMINA\\tPU:NOVASEQ\\tSM:${meta.sample_id}\\tLB:${meta.library_id}\\tDS:${fasta}\\tCN:CCGA" \
     -t ${task.cpus} ${fasta} $left $right \
     | samtools fixmate -@ ${task.cpus} -m - - \
-    | samtools sort -@ ${task.cpus} -m 2G -O bam -o $bam - 
+    | samtools sort -@ ${task.cpus} -m 4G -O bam -o $bam - 
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
