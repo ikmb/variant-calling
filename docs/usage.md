@@ -35,6 +35,10 @@ A list of variant callers to use. Valid options are:
 * [Deepvariant](https://github.com/google/deepvariant) (deepvariant)
 * [Freebayes](https://github.com/freebayes/freebayes) (freebayes)
 
+For calling structural variants:
+
+* [Manta](https://github.com/Illumina/manta) (manta)
+
 ### `--joint_calling` [ default: false]
 
 Perform joint-calling of samples in addition to single-sample variant calling. Note that this option is very slow when combined with Freebayes on larger genomes and/or many samples. 

@@ -18,6 +18,7 @@ include { CUSTOM_DUMPSOFTWAREVERSIONS } from './../modules/custom/dumpsoftwareve
 include { SAMTOOLS_DICT }       from './../modules/samtools/dict/main'
 include { TABIX }               from './../modules/htslib/tabix/main'
 include { BCFTOOLS_STATS }      from './../modules/bcftools/stats/main'
+include { MANTA }               from './../modules/manta/main.nf'
 
 ch_versions         = Channel.from([])
 multiqc_files       = Channel.from([])
@@ -129,6 +130,17 @@ workflow VARIANT_CALLING {
             //ch_vcfs = ch_vcfs.mix(FREEBAYES_PARALLEL.out.vcf)
         }
 
+    }
+    
+    if ( 'manta' in tools ) {
+    
+        MANTA(
+            ALIGN.out.bam,
+            ch_genome.collect()
+        )
+        
+        ch_versions = ch_versions.mix(MANTA.out.versions)
+    
     }
 
     TABIX(
