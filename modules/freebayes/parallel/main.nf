@@ -18,7 +18,7 @@ process FREEBAYES_PARALLEL {
     script:
     prefix = "freebayes-joint_calling-" + params.run_name
     vcf =  prefix + ".vcf.gz"
-    def options = "--min-alternate-fraction 0.1 --min-alternate-count 5 --pooled-continuous "
+    def options = params.freebayes_options
 
     """ 
     freebayes-parallel <(fasta_generate_regions.py $fai 10000) ${task.cpus} -f $fasta \\
