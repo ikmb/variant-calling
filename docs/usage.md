@@ -42,3 +42,11 @@ For calling structural variants:
 ### `--joint_calling` [ default: false]
 
 Perform joint-calling of samples in addition to single-sample variant calling. Note that this option is very slow when combined with Freebayes on larger genomes and/or many samples. 
+
+### `--freebayes_options`
+
+Pass options to Freebayes. By default, this is set to:
+
+```
+"--min-alternate-fraction 0.1 --min-alternate-count 5 --pooled-continuous "
+```

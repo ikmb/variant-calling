@@ -19,7 +19,7 @@ process FREEBAYES {
     script:
     prefix = meta.sample_id + "-freebayes"
     vcf =  prefix + ".vcf.gz"
-    def options = "--min-alternate-fraction 0.1 --min-alternate-count 5 --pooled-continuous "
+    def options = params.freebayes_options
     """
     
     freebayes \\
