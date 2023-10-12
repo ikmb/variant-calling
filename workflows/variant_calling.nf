@@ -70,16 +70,31 @@ workflow VARIANT_CALLING {
     ).map { x,f,i,d -> [ f,i,d ]}
     .set { ch_genome }
 
-    // build a mapping index for the genome
-    BWA2_MEM_INDEX(
-        ch_fasta
-    )
-    ch_versions = ch_versions.mix(BWA2_MEM_INDEX.out.versions)
+    if (params.bwa2_index) {
+        Channel.fromPath(params.bwa2_index).map { f ->
+            [
+                f,
+                f + ".0123",
+                f + ".amb",
+                f + ".ann",
+                f + ".bwt.2bit.64",
+                f + ".pac"
+            ]
+        }.set { ch_bwa_index }
+    } else {
+        // build a mapping index for the genome
+        BWA2_MEM_INDEX(
+            ch_fasta
+        )
+        ch_bwa_index = BWA2_MEM_INDEX.out.bwa_index
+        ch_versions = ch_versions.mix(BWA2_MEM_INDEX.out.versions)
+    }
+    
 
     // align reads to the genome index
     ALIGN(
         FASTP.out.reads,
-        BWA2_MEM_INDEX.out.bwa_index,
+        ch_bwa_index,
         ch_genome
     )
     ch_versions = ch_versions.mix(ALIGN.out.versions)

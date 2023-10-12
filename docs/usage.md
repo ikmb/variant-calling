@@ -50,3 +50,7 @@ Pass options to Freebayes. By default, this is set to:
 ```
 "--min-alternate-fraction 0.1 --min-alternate-count 5 --pooled-continuous "
 ```
+
+### `--bwa2_index`
+
+Provide path to a previously generated BWA2 index (should specify the full path to the genome fasta inside that folder; all other paths will be derived from that name). 

@@ -2,7 +2,7 @@ process GLNEXUS {
 
     container 'quay.io/mlin/glnexus:v1.3.1'
 
-    label 'medium_serial'
+    label 'extra_long_serial'
 
     publishDir "${params.outdir}/JOINT_CALLS/GLNEXUS_DEEPVARIANT", mode: 'copy'
 
